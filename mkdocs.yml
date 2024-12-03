@@ -1,0 +1,6 @@
+site_name: AWS Documentation
+nav:
+  - AWS: index.md
+  - EC2: ec2.md
+  - S3: s3.md
+  - IaC: iac.md
