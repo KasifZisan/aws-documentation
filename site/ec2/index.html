@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>EC2 - AWS Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">AWS Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">AWS</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">EC2</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../s3/" class="nav-link">S3</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../iac/" class="nav-link">IaC</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href=".." class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" href="../s3/" class="nav-link">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-light">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#amazon-elastic-compute-cloud-ec2" class="nav-link">Amazon Elastic Compute Cloud (EC2)</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#ec2-components" class="nav-link">EC2 Components</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#virtual-private-cloud-vpc" class="nav-link">Virtual Private Cloud (VPC)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#load-balancers" class="nav-link">Load Balancers</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="amazon-elastic-compute-cloud-ec2">Amazon Elastic Compute Cloud (EC2)</h1>
+<p>It allows us to deploy virtual servers within the AWS environment.</p>
+<h2 id="ec2-components">EC2 Components</h2>
+<ul>
+<li><strong>Amazon Machine Images (AMI):</strong> Pre configured EC2 instances that allow to quickly launch a new EC2 instance based on the config defined in the AMI. An AMI can help in auto scaling where multiple instances of the AMI can be quickly created.</li>
+<li><strong>Instance Types:</strong> Defines the size of the instance based on different parameters - vCPUs, Architecture, Memory, Storage, Storage type, Network performance</li>
+<li><strong>Instance purchasing options:</strong> On demand instances [can be launched anytime, can be used for as long as needed, flat rate based on instance types, typically used for short-term workloads], Spot Instances [on demand instances that are not taken currently, these are based on supply and demand], Reserved Instances [purchase a discounted on-demand instance for a set period], On-Demand Capacity Reservations [reserve capacity based on attribute]</li>
+<li><strong>Tenancy:</strong> Shared Tenancy [by default, instances run on available hosts with selected resources], Dedicated Tenancy [runs on Dedicated Instances and Dedicated Hosts]</li>
+<li><strong>Uesr Data:</strong> Allows to enter commands that will run during the first boot cycle of that instance. </li>
+<li><strong>Storage Options:</strong> Persistent Storage [EBS Volumes, also can be taken a snapshot of and store in an Amazon S3 Bucket], Ephemeral Storage [Created by EC2 instances using local storage]</li>
+<li><strong>Security:</strong> Security group is an instance level firewall that protects traffic from ingress and egress requests. Restrict communications using source ports and protocols. Key-Pair Login: Private key and Public key system</li>
+</ul>
+<h2 id="virtual-private-cloud-vpc">Virtual Private Cloud (VPC)</h2>
+<p>A VPC (Virtual Private Cloud) is a logically isolated section of a cloud provider’s network.</p>
+<ul>
+<li><strong>Isolation:</strong> Resources inside a VPC are isolated.</li>
+<li><strong>Customization:</strong> We can customize the IP address range, subnets, routing and security settings like network access control list (ACL) and security groups.</li>
+<li><strong>Security:</strong> Firewalls, Private Subnets and VPNs</li>
+<li><strong>Network Config:</strong> We can configure routing tables, internet gateways and even peering connections.</li>
+</ul>
+<h4 id="vpc-endpoint">VPC Endpoint</h4>
+<p>A VPC Endpoint allows you to privately connect your VPC to support AWS services (like S3, DynamoDB, etc.) without requiring an internet connection, NAT gateway, or VPN connection.</p>
+<h4 id="cidr-classless-inter-domain-routing">CIDR (Classless Inter-Domain Routing)</h4>
+<p>It is a method for assigning IP addresses and IP routing that allows more efficient and flexible allocation of IP addresses. It provides a way to define network addresses with variable-length subnet masks, enabling networks of different sizes to be created.</p>
+<p>CIDR notations are typically as - <code>IP address/prefix length</code></p>
+<h4 id="subnet">Subnet</h4>
+<p>A subnet (short for subnetwork) is a logical division of an IP network into smaller, manageable parts. It allows you to break a larger network into smaller segments to improve performance, security, and manageability.</p>
+<h4 id="subnet-mask">Subnet Mask</h4>
+<p>A subnet mask is used to separate the network portion of an IP address from the host portion. In CIDR notation, the subnet mask is directly related to the prefix length. For <code>192.168.0.0/24</code>, the subnet mask is written as <code>255.255.255.0</code>.</p>
+<h4 id="ipv4-and-ipv6-cidr">IPV4 and IPV6 CIDR</h4>
+<p>IPv4 addresses are 32 bits long, written in four octets (e.g., 192.168.0.1), which gives around 4.3 billion unique addresses.</p>
+<p>For example - <code>192.168.0.0/24</code>, This represents all IP addresses from <code>192.168.0.0</code> to <code>192.168.0.255</code></p>
+<p>IPv6 addresses are 128 bits long, written in hexadecimal and separated by colons (e.g., 2001:0db8:85a3::8a2e:0370:7334). IPv6 can support a vastly larger number of addresses—about 340 undecillion addresses.</p>
+<h4 id="routing-table">Routing Table</h4>
+<p>In a routing table, the destination and target (sometimes called "next hop") columns are key components that determine how network traffic is routed. </p>
+<ul>
+<li><strong>Destination Column:</strong> The destination column in the routing table specifies the destination network or destination IP address that the packet is trying to reach.</li>
+<li><strong>Target Column:</strong> The target (or "next hop") column specifies where the packet should go next to reach the destination.</li>
+</ul>
+<p>The CIDR block must not be the same or larger than a destination CIDR range in a route in any of the VPC route tables.</p>
+<h4 id="internet-gateway-igw">Internet Gateway (IGW)</h4>
+<p>IGW is a component that helps VPCs connect with the internet or other external networks. It serves as the bridge between the private network (your VPC) and the public Internet.</p>
+<ul>
+<li><strong>Bidirectional Traffic:</strong>  The Internet Gateway allows instances within the VPC to send and receive traffic from the Internet. </li>
+<li><strong>Public and Private IP Handling:</strong> For the Internet Gateway to work, instances in the VPC need either: Public IP address, Elastic IP address, NAT Gateways</li>
+</ul>
+<h4 id="network-address-translation-nat-gateway">Network Address Translation (NAT) Gateway</h4>
+<p>A NAT gateway enables instances within a private subnet in a VPC to access the internet for outbound traffic. The NAT gateway is a fully managed service provided by AWS, meaning AWS automatically takes care of scaling, fault tolerance, and maintenance. It can scale automatically to accommodate large amounts of traffic.</p>
+<h4 id="virtual-private-gateway-vgw">Virtual Private Gateway (VGW)</h4>
+<p>A Virtual Private Gateway (VGW) enables communication between an on-premises network and a cloud-based Virtual Private Cloud (VPC). </p>
+<h2 id="load-balancers">Load Balancers</h2>
+<h4 id="application-load-balancer">Application Load Balancer</h4>
+<p>A load balancer serves as the single point of contact for clients. The load balancer distributes incoming application traffic across multiple targets, such as EC2 instances, in multiple Availability Zones. This increases the availability of your application. You add one or more listeners to your load balancer.</p>
+<h4 id="route-based-load-balancing-path-based-routing">Route-Based Load Balancing (Path-Based Routing):</h4>
+<p>Route-based load balancing (also called path-based routing) distributes traffic to different target groups based on the request URL path. 
+The load balancer inspects the URL path of the incoming HTTP(S) request. Based on the path, it routes the traffic to a specific target group or service.</p>
+<p>Example:</p>
+<ul>
+<li>Requests to example.com/frontend are routed to the frontend servers.</li>
+<li>Requests to example.com/api are routed to the API servers.</li>
+</ul>
+<p>In AWS, you can configure path-based routing with an Application Load Balancer (ALB). You would define rules in the load balancer's listener based on URL paths (e.g., /images/<em>, /api/</em>), which then forwards the request to different target groups.</p>
+<h4 id="host-based-load-balancing">Host-Based Load Balancing</h4>
+<p>Host-based load balancing (also called host header-based routing) distributes traffic based on the hostname in the HTTP request. This allows you to direct traffic to different services or applications based on the domain or subdomain.</p>
+<p>The load balancer inspects the Host header of the incoming HTTP(S) request.</p>
+<p>Example:</p>
+<p>A company has multiple domains or subdomains -</p>
+<ul>
+<li>www.example.com for the main website.</li>
+<li>api.example.com for their API.</li>
+<li>Requests to www.example.com go to the web servers.</li>
+<li>Requests to api.example.com go to the API servers.</li>
+</ul>
+<h4 id="listener-and-target-groups">Listener and Target Groups</h4>
+<p>The rules that you define for a listener determine how the load balancer routes requests to its registered targets. Each rule consists of a priority, one or more actions, and one or more conditions.</p>
+<p>Each target group routes requests to one or more registered targets, such as EC2 instances, using the protocol and port number that you specify. You can register a target with multiple target groups.</p>
+<p>You can configure health checks on a per target group basis. </p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
