@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>AWS ELB - AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "AWS ELB";
+        var mkdocs_page_input_path = "elb.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">AWS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ec2/">AWS EC2</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">AWS ELB</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#elastic-load-balancer-elb">Elastic Load Balancer (ELB)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#application-load-balancer">Application Load Balancer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#network-load-balancer">Network Load Balancer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#route-based-load-balancing-path-based-routing">Route-Based Load Balancing (Path-Based Routing):</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#host-based-load-balancing">Host-Based Load Balancing</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#classic-load-balancer">Classic Load Balancer</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#elb-components">ELB Components</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ssl-server-certificates">SSL Server Certificates</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#network-load-balancer_1">Network Load Balancer</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ec2-auto-scaling">EC2 Auto Scaling</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#auto-scaling-in-aws">Auto Scaling in AWS</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#components-of-ec2-auto-scaling">Components of EC2 Auto Scaling</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#launch-configuration">Launch Configuration</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#launch-template">Launch Template</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#auto-scaling-groups">Auto Scaling Groups</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../s3/">AWS S3</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">AWS ELB</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="load-balancers">Load Balancers</h1>
+<h2 id="elastic-load-balancer-elb">Elastic Load Balancer (ELB)</h2>
+<p>The main function of an ELB is to help manage and control the flow of inbound requests destined to a group of targets by distributing these requests evenly accross the targeted resource group. These targets could be a group of EC2s, lambda functions, a range of IP addresses or even Containers. </p>
+<h4 id="application-load-balancer">Application Load Balancer</h4>
+<p>A load balancer serves as the single point of contact for clients. The load balancer distributes incoming application traffic across multiple targets, such as EC2 instances, in multiple Availability Zones. This increases the availability of your application. You add one or more listeners to your load balancer. </p>
+<p>You can set port for HTTP or HTTPS requests in your ALB. It operates at the request level. You also have Advanced routing, TLS termination and visibility features targeted at application architectures.</p>
+<h4 id="network-load-balancer">Network Load Balancer</h4>
+<ul>
+<li>Ultra-high performance while maintaining very low latencies </li>
+<li>Operates at the connection level, routing traffic to targets within your VPC</li>
+<li>Handles millions of requests per second</li>
+</ul>
+<h4 id="route-based-load-balancing-path-based-routing">Route-Based Load Balancing (Path-Based Routing):</h4>
+<p>Route-based load balancing (also called path-based routing) distributes traffic to different target groups based on the request URL path. 
+The load balancer inspects the URL path of the incoming HTTP(S) request. Based on the path, it routes the traffic to a specific target group or service.</p>
+<p>Example:</p>
+<ul>
+<li>Requests to example.com/frontend are routed to the frontend servers.</li>
+<li>Requests to example.com/api are routed to the API servers.</li>
+</ul>
+<p>In AWS, you can configure path-based routing with an Application Load Balancer (ALB). You would define rules in the load balancer's listener based on URL paths (e.g., /images/<em>, /api/</em>), which then forwards the request to different target groups.</p>
+<h4 id="host-based-load-balancing">Host-Based Load Balancing</h4>
+<p>Host-based load balancing (also called host header-based routing) distributes traffic based on the hostname in the HTTP request. This allows you to direct traffic to different services or applications based on the domain or subdomain.</p>
+<p>The load balancer inspects the Host header of the incoming HTTP(S) request.</p>
+<p>Example:</p>
+<p>A company has multiple domains or subdomains -</p>
+<ul>
+<li>www.example.com for the main website.</li>
+<li>api.example.com for their API.</li>
+<li>Requests to www.example.com go to the web servers.</li>
+<li>Requests to api.example.com go to the API servers.</li>
+</ul>
+<h4 id="classic-load-balancer">Classic Load Balancer</h4>
+<ul>
+<li>Used for applications that were build in the existing EC2 Classic Environment</li>
+<li>Operates at both the connection and request level</li>
+</ul>
+<h4 id="elb-components">ELB Components</h4>
+<p><strong>Listeners:</strong> The rules that you define for a listener determine how the load balancer routes requests to its registered targets. Each rule consists of a priority, one or more actions, and one or more conditions.</p>
+<p><strong>Target Groups:</strong> Each target group routes requests to one or more registered targets, such as EC2 instances, using the protocol and port number that you specify. You can register a target with multiple target groups. You can configure health checks on a per target group basis. </p>
+<p><strong>Rules:</strong> Rules are associated to each listener that you have configured withing your ELB. They help to define how an incoming request gets routed to which target group.</p>
+<p><strong>Health Checks:</strong> A health check is performed against the resources defined within the target group. These health checks allow the ELB to contact each target using a specific protcol to receive a response.</p>
+<p><strong>Internet-facing ELB:</strong> The nodes of the ELB are accessible via the internt and so have a public DNS name that can be resolved to its Public IP address, in addition to an internal IP address.</p>
+<p><strong>Internal ELB:</strong> An internal ELB only has an internal IP address, this means that it can only serve requests that originate from within your VPC itself.</p>
+<p><strong>ELB Nodes:</strong> For each AZ selected an ELB node will be placed within that AZ.</p>
+<h2 id="ssl-server-certificates">SSL Server Certificates</h2>
+<p>IF we set HTTPS as our listener, then it will allow us an encrypted communication channnel to be set up between clients initiating the request and your ALB. But to allow ALB to receive encrypted traffic over HTTPS it will need a server certificate and an associated security policy. </p>
+<p>SSL (Secure Sockets Layer) is a cryptography protocol, much like TLS (Transport Layer Security). Both SSL and TSL are used interchangebly when discussing certificates on your ALB.</p>
+<p>The server certificate used by ALB is an X.509 certificate, which is a digital ID provisioned by AWS Certificate Manager (ACM). </p>
+<h2 id="network-load-balancer_1">Network Load Balancer</h2>
+<p>The network load balancer operates at layer 4 of the OSI model enabling you to balance requests purely based upon the TCP protocol. The NLB can process requests in TCP, TLS, and UDP. It is able to process millions of requests per second which makes it ideal for high performance applications.</p>
+<p>If your application logic requires a static IP address, then NLB will need to be your choice of ELB.</p>
+<h2 id="ec2-auto-scaling">EC2 Auto Scaling</h2>
+<p>Auto scaling is the mechanism that allows you to increase or decrease your EC2 resources to meet the demand based off of custom defined metrics and thresholds.</p>
+<h2 id="auto-scaling-in-aws">Auto Scaling in AWS</h2>
+<ul>
+<li>Amazon EC2 Auto Scaling</li>
+<li>AWS Auto Scaling - Can automatically scale - Amazon ECS, DynamoDB, Amazon Aurora</li>
+</ul>
+<h2 id="components-of-ec2-auto-scaling">Components of EC2 Auto Scaling</h2>
+<ul>
+<li>Create a Launch Configuration or Launch Template - These define how an Auto Scaling group builds new EC2 instances.</li>
+<li>Create an Auto Scaling group</li>
+</ul>
+<h4 id="launch-configuration">Launch Configuration</h4>
+<ul>
+<li>Which AMI to use</li>
+<li>What Instance type</li>
+<li>If you would like to use Spot Instances</li>
+<li>If and when Public IP Addresses should be used</li>
+<li>If any user data is on first boot</li>
+<li>What storage volume configuration should be used</li>
+<li>What security groups should be applied</li>
+</ul>
+<h4 id="launch-template">Launch Template</h4>
+<p>A launch template is essentially a newer and more advanced version of the launch configuration. Being a template you can build a standard configuration allowing you to simplify how you launch instances for your auto scaling groups. This is the <strong>preferred</strong> method.</p>
+<h4 id="auto-scaling-groups">Auto Scaling Groups</h4>
+<p>The auto scaling group defines:</p>
+<ul>
+<li>The required capacity and other limitations of the group using scaling policies</li>
+<li>Where the group should scale resources, such as which AZ</li>
+</ul>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../ec2/" class="btn btn-neutral float-left" title="AWS EC2"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../s3/" class="btn btn-neutral float-right" title="AWS S3">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../ec2/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../s3/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
