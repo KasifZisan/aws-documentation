@@ -1,5 +1,8 @@
 site_name: AWS Documentation
 nav:
   - AWS: index.md
-  - EC2: ec2.md
-  - S3: s3.md
+  - AWS EC2: ec2.md
+  - AWS ELB: elb.md
+  - AWS S3: s3.md
+theme:
+  name: readthedocs
