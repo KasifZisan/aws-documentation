@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>AWS Storage - AWS Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "AWS Storage";
+        var mkdocs_page_input_path = "storage.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> AWS Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">AWS</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../ec2/">AWS Compute</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../elb/">AWS Load Balancers</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">AWS Storage</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#overview-of-amazon-s3">Overview of Amazon S3</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ec2-instance-storage">EC2 Instance Storage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#benefits-of-ec2-instance-storage">Benefits of EC2 Instance Storage</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#amazon-elastic-block-store-ebs">Amazon Elastic Block Store (EBS)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#ebs-security">EBS Security</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#ways-to-create-ebs-volumes">Ways to Create EBS Volumes:</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#ebs-multi-attach">EBS Multi-Attach</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#file-systems">File Systems</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#nitro-systems">Nitro Systems</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#amazon-elastic-file-system-efs">Amazon Elastic File System (EFS)</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hybrid-storage-solution-using-aws-storage-gateway">Hybrid Storage Solution using AWS Storage Gateway</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#deployment-options">Deployment Options</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#aws-elastic-disaster-recovery-system-drs">AWS Elastic Disaster Recovery System (DRS)</a>
+    </li>
+    </ul>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">AWS Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">AWS Storage</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="storage-fundamentals-for-aws">Storage Fundamentals for AWS</h1>
+<p>AWS provides many services for storing data. Data storage can be divided into categories such as:</p>
+<ul>
+<li>Block Storage<ul>
+<li>Data is stored in chunks known as blocks</li>
+<li>Blocks are stored on a volume and attached to a single instance</li>
+<li>Provide very low latency</li>
+</ul>
+</li>
+<li>File Storage<ul>
+<li>Data is stored as seperate files within a series of directories</li>
+<li>Data is stored on top of a file system</li>
+<li>Shared access is provided for multiple users</li>
+</ul>
+</li>
+<li>Object Storage<ul>
+<li>Objects are stored across a flat address space</li>
+<li>Objects are referenced by a unique key</li>
+<li>Each object can also have associated metadata to help categorize and identify the object</li>
+</ul>
+</li>
+</ul>
+<h2 id="overview-of-amazon-s3">Overview of Amazon S3</h2>
+<p>Amazon S3 (Simple Storage Service) is a fully managed Object-based storage service by Amazon, that is - </p>
+<ul>
+<li>Highly Available</li>
+<li>Durable</li>
+<li>Cost Effective</li>
+<li>Widely Accessible</li>
+</ul>
+<p>It is a object based storage service so each file uploaded does not belong to hierarchial file system but rather file is stored in a flat path and which is referenced by a unique URL. S3 is also a Regional service. </p>
+<p>To store object in S3, you first need to define and create a bucket. This bucket name must be completetly unique. By default your account can have upto a 100 buckets but this is a soft limit and a request can be made to increase this.</p>
+<p>Any object uploaded to the bucket are given a unique object key for identification. </p>
+<h2 id="ec2-instance-storage">EC2 Instance Storage</h2>
+<p>This is also referred to Instance Store Volume. The volumes reside on the same host that provides the EC2 instances itself. The instance storage provides Ephemeral storage for your instance volumes. So it is recommended not to store critical data on these ephemeral volumes. </p>
+<p>These are the cirumstances where data stored in the EC2 Instance Storage will be lost - </p>
+<ul>
+<li>Stop</li>
+<li>Termniate</li>
+</ul>
+<p>However, if the instance was simply rebooted, the data would remain intact</p>
+<h4 id="benefits-of-ec2-instance-storage">Benefits of EC2 Instance Storage</h4>
+<ul>
+<li>No additional cost for storage</li>
+<li>Very high I/O speed</li>
+<li>Optimized instance families</li>
+<li>Instance store volumes are ideal as a cache or buffer for rapidly changing data without the need for retention</li>
+<li>Often used within a load balancing group, where data is replicated and pooled between the fleet</li>
+</ul>
+<h2 id="amazon-elastic-block-store-ebs">Amazon Elastic Block Store (EBS)</h2>
+<p>EBS provides storage to EC2 instances with EBS Volume</p>
+<ul>
+<li>Provides persistent and durable block level storage</li>
+<li>EBS volumes offer far more flexiblity with regards to managing the data</li>
+</ul>
+<p>EBS volumes are attached to your EC2 instance and are primiarily used for fast changing data that requires a certain amount of Input/Output operations per second (IOPS).</p>
+<p>EBS also provides the ability to provide point-in-time backup of the storage, called Snapshots. You can manually create a Snapshot of of your storage or automate it using Amazon CloudWatch. The Snapshots themselves are stored in S3 so that they are very durable and reliable.</p>
+<p>Snapshots are also incremental meaning they will only copy data that has changed since the previous snapshot was taken.</p>
+<p>Once you have the snapshot of an EBS volume, you can create a new volume from that snapshot. It is also possible to have Snaposhots in different regions. </p>
+<p>Two types of EBS volumes available -</p>
+<ul>
+<li>SSD Backed Storage<ul>
+<li>Suited for work with smaller blocks</li>
+<li>As boot volumes for EC</li>
+</ul>
+</li>
+<li>HDD Backed Storage<ul>
+<li>Suited for workloads that require a higher rate of throughput</li>
+<li>E.g.: big data and logging information</li>
+</ul>
+</li>
+</ul>
+<h4 id="ebs-security">EBS Security</h4>
+<p>If you have sensitive information in your storage, then you can just check the box for 'enable EBS security' and EBS will ensure security using Amazon's AES-256 encryption method and AWS KMS (Key Management System). Any snapshot taken from a encrypted volume would also be encrypted. But it is to be noted that this encryption is only available on selected instance types.</p>
+<h4 id="ways-to-create-ebs-volumes">Ways to Create EBS Volumes:</h4>
+<ul>
+<li>During the creation of a new instance. You can attach it at the time of launch.</li>
+<li>From within the EC2 dashboard of the AWS management console. Create it as a standalone volume, ready to be attached to an instance when required.</li>
+</ul>
+<h2 id="ebs-multi-attach">EBS Multi-Attach</h2>
+<p>Normally one EBS can only be attached to only one EC2. But with Multi-Attach one EBS can be attached with multiple EC2. But this is heavily dependent on the type of volume and the type of instance. For the time being Multi-Attach is only available in - </p>
+<ul>
+<li>Provisioned IOPS SSD (io1)</li>
+<li>Provisioned IOPS SSD (i02)</li>
+</ul>
+<h4 id="file-systems">File Systems</h4>
+<p>It is recommended to use a <strong>Clustered File System</strong> such as GFS2. This will safely manag multi-instance access to the shared volume.</p>
+<h4 id="nitro-systems">Nitro Systems</h4>
+<p>EC2 instances based on the <strong>Nitro Systems</strong> can run EC2 on maximum performance. Nitro instances is a requirement for using Multi-Attach. </p>
+<p><strong>Nitro:</strong> The underlying virtualization platform of the EC2 instance. </p>
+<p><strong>Bare Metal Insances:</strong> The nitro also introduces the concept of Bare Metal Instances. That means you can run EC2 instances without any hypervisor or the customer can use their own hypervisor.</p>
+<h2 id="amazon-elastic-file-system-efs">Amazon Elastic File System (EFS)</h2>
+<p>It is like your typical directory based file system. This also supports low latency file storage. But unlike EBS, it can provide support to multiple file systems. It also has features of traditional file systems such as - locking files, updating files and renaming files. It also has a hierarchial file structure. This type of storage allows you to store files that are accessible to network resources.</p>
+<h2 id="hybrid-storage-solution-using-aws-storage-gateway">Hybrid Storage Solution using AWS Storage Gateway</h2>
+<p>AWS Storage Gateway for hybrid storage between on-premises and cloud infrastructure. </p>
+<h4 id="deployment-options">Deployment Options</h4>
+<ul>
+<li>On-Premises on a Virtual Machine or AWS Storage Gateway Hardware Appliance</li>
+<li>Deploy it on a AWS EC2 instance using AWS Storage Gateway Management Service</li>
+</ul>
+<p>When deploying the gateway, it will ask for at least 150MB which will work as the local cache. This will act as - </p>
+<ul>
+<li>A staging area for data thatthe gateway will upload to AWS</li>
+<li>A true cache to save data for low-latency access</li>
+</ul>
+<p>There are four types of storage gateway - </p>
+<ul>
+<li>S3 File Gateway</li>
+<li>FSx File Gateway</li>
+<li>Tape Gateway</li>
+<li>Volume Gateway</li>
+</ul>
+<h2 id="aws-elastic-disaster-recovery-system-drs">AWS Elastic Disaster Recovery System (DRS)</h2>
+<p>AWS Elastic DRS is AWS' service for recovering failed applications. It is more efficient and cost-effective than on premises data recovery systems. AWS DRS supports <strong>Recovery Point Objectives (RPOs)</strong> of seconds and <strong>Recovery Time Objectives (RTOs)</strong> of minutes by performing ongoing replication of your source servers' disks to EBS volumes in the AWS cloud.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../elb/" class="btn btn-neutral float-left" title="AWS Load Balancers"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../elb/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
