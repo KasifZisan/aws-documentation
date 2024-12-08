@@ -1,8 +1,8 @@
 site_name: AWS Documentation
 nav:
   - AWS: index.md
-  - AWS EC2: ec2.md
-  - AWS ELB: elb.md
-  - AWS S3: s3.md
+  - AWS Compute: ec2.md
+  - AWS Load Balancers: elb.md
+  - AWS Storage: storage.md
 theme:
   name: readthedocs
