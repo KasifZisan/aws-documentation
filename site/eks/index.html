@@ -59,7 +59,7 @@
     
     
     
-    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="light-blue">
   
     
     
@@ -353,6 +353,13 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#frontend-deployment" class="md-nav__link">
+    Frontend Deployment
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -424,6 +431,13 @@
           <li class="md-nav__item">
   <a href="#api-backend-deployment" class="md-nav__link">
     API (Backend) Deployment
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#frontend-deployment" class="md-nav__link">
+    Frontend Deployment
   </a>
   
 </li>
@@ -638,6 +652,51 @@ echo
 curl -s $API_ELB_PUBLIC_FQDN/languages/go | jq .
 curl -s $API_ELB_PUBLIC_FQDN/languages/java | jq .
 curl -s $API_ELB_PUBLIC_FQDN/languages/nodejs | jq .
+</code></pre>
+<h4 id="frontend-deployment">Frontend Deployment</h4>
+<p>The frontend deployment steps are same as the backend deployment steps - </p>
+<ul>
+<li>Retrieve the FQDN of the API LoadBalancer and store it in the <code>$API_PUBLIC_FQDN</code> variable. The value stored in the <code>$API_PUBLIC_FQDN</code> variable is injected into the Frontend container's <code>REACT_APP_APIHOSTPORT</code> environment var - this tells the frontend where to send browser initiated API AJAX calls. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">{
+API_ELB_PUBLIC_FQDN=$(kubectl get svc api -ojsonpath=&quot;{.status.loadBalancer.ingress[0].hostname}&quot;)
+echo API_ELB_PUBLIC_FQDN=$API_ELB_PUBLIC_FQDN
+}
+</code></pre>
+<ul>
+<li>Create the Frontend Deployment resource</li>
+<li>Create a new Service resource of LoadBalancer type</li>
+<li>Confirm the Frontend setup within the cluster:<ul>
+<li>Examine the rollout of the Frontend deployment</li>
+<li>Examine the pods to confirm that they are up and running</li>
+<li>Examine the Frontend service details</li>
+</ul>
+</li>
+</ul>
+<pre><code class="language-bash">{
+kubectl rollout status deployment frontend
+kubectl get pods -l role=frontend
+kubectl get svc frontend
+}
+</code></pre>
+<ul>
+<li>Confirm that the Frontend ELB is ready to recieve HTTP traffic. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">{
+FRONTEND_ELB_PUBLIC_FQDN=$(kubectl get svc frontend -ojsonpath=&quot;{.status.loadBalancer.ingress[0].hostname}&quot;)
+until nslookup $FRONTEND_ELB_PUBLIC_FQDN &gt;/dev/null 2&gt;&amp;1; do sleep 2 &amp;&amp; echo waiting for DNS to propagate...; done
+curl -I $FRONTEND_ELB_PUBLIC_FQDN
+}
+</code></pre>
+<ul>
+<li>Generate the Frontend URL for browsing. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">echo http://$FRONTEND_ELB_PUBLIC_FQDN
+</code></pre>
+<ul>
+<li>Query the MongoDB database directly to observe the updated vote data. In the terminal execute the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl exec -it mongo-0 -- mongo langdb --eval &quot;db.languages.find().pretty()&quot;
 </code></pre>
 
 

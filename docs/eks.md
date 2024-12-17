@@ -206,3 +206,42 @@ echo http://$FRONTEND_ELB_PUBLIC_FQDN
 ```bash
 kubectl exec -it mongo-0 -- mongo langdb --eval "db.languages.find().pretty()"
 ```
+
+# AWS Load Balancer Controller and Ingress Resource
+- Before creating the Load Balancer Controller, you need to perform some EKS cluster configuration. The EKS cluster can either be created using GUI or in this case, we will be using ```eksctl``` utility. It can be created with the following setting:
+```bash
+eksctl create cluster \
+--version=1.31 \
+--name=Cluster-1 \
+--nodes=1 \
+--node-type=t2.medium \
+--ssh-public-key="cloudacademylab" \
+--region=us-west-2 \
+--zones=us-west-2a,us-west-2b,us-west-2c \
+--node-volume-type=gp2 \
+--node-volume-size=20
+```
+- An OpenID Connect provider needs to be established. This was performed using the following command:
+```bash
+eksctl utils associate-iam-oidc-provider \
+--region us-west-2 \
+--cluster Cluster-1 \
+--approve
+```
+- A new IAM Policy was created, providing various permissions required to provision the underlying infrastructure items (ALBs and/or NLBs) created when Ingress and Service cluster resources are created.
+```bash
+curl -o /tmp/iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
+aws iam create-policy \
+--policy-name AWSLoadBalancerControllerIAMPolicy \
+--policy-document file:///tmp/iam_policy.json
+```
+- A new cluster service account bound to the IAM policy has been created. When the AWS Load Balancer controller is later deployed by you, it will be configured to operate with this service account:
+```bash
+eksctl create iamserviceaccount \
+--cluster Cluster-1 \
+--namespace kube-system \
+--name aws-load-balancer-controller \
+--attach-policy-arn arn:aws:iam::${AWS::AccountId}:policy/AWSLoadBalancerControllerIAMPolicy \
+--override-existing-serviceaccounts \
+--approve
+```
