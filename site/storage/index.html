@@ -1,0 +1,759 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+        <link rel="prev" href="../elb/">
+      
+      
+        <link rel="next" href="../eks/">
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.4.0">
+    
+    
+      
+        <title>AWS Storage - AWS Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.9f615399.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.649f08f9.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="light-blue">
+  
+    
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#storage-fundamentals-for-aws" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="AWS Documentation" class="md-header__button md-logo" aria-label="AWS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            AWS Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AWS Storage
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="AWS Documentation" class="md-nav__button md-logo" aria-label="AWS Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    AWS Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ec2/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS Compute
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../elb/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS Load Balancers
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AWS Storage
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    AWS Storage
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-amazon-s3" class="md-nav__link">
+    Overview of Amazon S3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ec2-instance-storage" class="md-nav__link">
+    EC2 Instance Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="EC2 Instance Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#benefits-of-ec2-instance-storage" class="md-nav__link">
+    Benefits of EC2 Instance Storage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-elastic-block-store-ebs" class="md-nav__link">
+    Amazon Elastic Block Store (EBS)
+  </a>
+  
+    <nav class="md-nav" aria-label="Amazon Elastic Block Store (EBS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ebs-security" class="md-nav__link">
+    EBS Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ways-to-create-ebs-volumes" class="md-nav__link">
+    Ways to Create EBS Volumes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ebs-multi-attach" class="md-nav__link">
+    EBS Multi-Attach
+  </a>
+  
+    <nav class="md-nav" aria-label="EBS Multi-Attach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-systems" class="md-nav__link">
+    File Systems
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nitro-systems" class="md-nav__link">
+    Nitro Systems
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-elastic-file-system-efs" class="md-nav__link">
+    Amazon Elastic File System (EFS)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-storage-solution-using-aws-storage-gateway" class="md-nav__link">
+    Hybrid Storage Solution using AWS Storage Gateway
+  </a>
+  
+    <nav class="md-nav" aria-label="Hybrid Storage Solution using AWS Storage Gateway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-options" class="md-nav__link">
+    Deployment Options
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aws-elastic-disaster-recovery-system-drs" class="md-nav__link">
+    AWS Elastic Disaster Recovery System (DRS)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../eks/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AWS EKS
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#overview-of-amazon-s3" class="md-nav__link">
+    Overview of Amazon S3
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ec2-instance-storage" class="md-nav__link">
+    EC2 Instance Storage
+  </a>
+  
+    <nav class="md-nav" aria-label="EC2 Instance Storage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#benefits-of-ec2-instance-storage" class="md-nav__link">
+    Benefits of EC2 Instance Storage
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-elastic-block-store-ebs" class="md-nav__link">
+    Amazon Elastic Block Store (EBS)
+  </a>
+  
+    <nav class="md-nav" aria-label="Amazon Elastic Block Store (EBS)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ebs-security" class="md-nav__link">
+    EBS Security
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#ways-to-create-ebs-volumes" class="md-nav__link">
+    Ways to Create EBS Volumes:
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ebs-multi-attach" class="md-nav__link">
+    EBS Multi-Attach
+  </a>
+  
+    <nav class="md-nav" aria-label="EBS Multi-Attach">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#file-systems" class="md-nav__link">
+    File Systems
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nitro-systems" class="md-nav__link">
+    Nitro Systems
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-elastic-file-system-efs" class="md-nav__link">
+    Amazon Elastic File System (EFS)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#hybrid-storage-solution-using-aws-storage-gateway" class="md-nav__link">
+    Hybrid Storage Solution using AWS Storage Gateway
+  </a>
+  
+    <nav class="md-nav" aria-label="Hybrid Storage Solution using AWS Storage Gateway">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deployment-options" class="md-nav__link">
+    Deployment Options
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aws-elastic-disaster-recovery-system-drs" class="md-nav__link">
+    AWS Elastic Disaster Recovery System (DRS)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="storage-fundamentals-for-aws">Storage Fundamentals for AWS</h1>
+<p>AWS provides many services for storing data. Data storage can be divided into categories such as:</p>
+<ul>
+<li>Block Storage<ul>
+<li>Data is stored in chunks known as blocks</li>
+<li>Blocks are stored on a volume and attached to a single instance</li>
+<li>Provide very low latency</li>
+</ul>
+</li>
+<li>File Storage<ul>
+<li>Data is stored as seperate files within a series of directories</li>
+<li>Data is stored on top of a file system</li>
+<li>Shared access is provided for multiple users</li>
+</ul>
+</li>
+<li>Object Storage<ul>
+<li>Objects are stored across a flat address space</li>
+<li>Objects are referenced by a unique key</li>
+<li>Each object can also have associated metadata to help categorize and identify the object</li>
+</ul>
+</li>
+</ul>
+<h2 id="overview-of-amazon-s3">Overview of Amazon S3</h2>
+<p>Amazon S3 (Simple Storage Service) is a fully managed Object-based storage service by Amazon, that is - </p>
+<ul>
+<li>Highly Available</li>
+<li>Durable</li>
+<li>Cost Effective</li>
+<li>Widely Accessible</li>
+</ul>
+<p>It is a object based storage service so each file uploaded does not belong to hierarchial file system but rather file is stored in a flat path and which is referenced by a unique URL. S3 is also a Regional service. </p>
+<p>To store object in S3, you first need to define and create a bucket. This bucket name must be completetly unique. By default your account can have upto a 100 buckets but this is a soft limit and a request can be made to increase this.</p>
+<p>Any object uploaded to the bucket are given a unique object key for identification. </p>
+<h2 id="ec2-instance-storage">EC2 Instance Storage</h2>
+<p>This is also referred to Instance Store Volume. The volumes reside on the same host that provides the EC2 instances itself. The instance storage provides Ephemeral storage for your instance volumes. So it is recommended not to store critical data on these ephemeral volumes. </p>
+<p>These are the cirumstances where data stored in the EC2 Instance Storage will be lost - </p>
+<ul>
+<li>Stop</li>
+<li>Termniate</li>
+</ul>
+<p>However, if the instance was simply rebooted, the data would remain intact</p>
+<h4 id="benefits-of-ec2-instance-storage">Benefits of EC2 Instance Storage</h4>
+<ul>
+<li>No additional cost for storage</li>
+<li>Very high I/O speed</li>
+<li>Optimized instance families</li>
+<li>Instance store volumes are ideal as a cache or buffer for rapidly changing data without the need for retention</li>
+<li>Often used within a load balancing group, where data is replicated and pooled between the fleet</li>
+</ul>
+<h2 id="amazon-elastic-block-store-ebs">Amazon Elastic Block Store (EBS)</h2>
+<p>EBS provides storage to EC2 instances with EBS Volume</p>
+<ul>
+<li>Provides persistent and durable block level storage</li>
+<li>EBS volumes offer far more flexiblity with regards to managing the data</li>
+</ul>
+<p>EBS volumes are attached to your EC2 instance and are primiarily used for fast changing data that requires a certain amount of Input/Output operations per second (IOPS).</p>
+<p>EBS also provides the ability to provide point-in-time backup of the storage, called Snapshots. You can manually create a Snapshot of of your storage or automate it using Amazon CloudWatch. The Snapshots themselves are stored in S3 so that they are very durable and reliable.</p>
+<p>Snapshots are also incremental meaning they will only copy data that has changed since the previous snapshot was taken.</p>
+<p>Once you have the snapshot of an EBS volume, you can create a new volume from that snapshot. It is also possible to have Snaposhots in different regions. </p>
+<p>Two types of EBS volumes available -</p>
+<ul>
+<li>SSD Backed Storage<ul>
+<li>Suited for work with smaller blocks</li>
+<li>As boot volumes for EC</li>
+</ul>
+</li>
+<li>HDD Backed Storage<ul>
+<li>Suited for workloads that require a higher rate of throughput</li>
+<li>E.g.: big data and logging information</li>
+</ul>
+</li>
+</ul>
+<h4 id="ebs-security">EBS Security</h4>
+<p>If you have sensitive information in your storage, then you can just check the box for 'enable EBS security' and EBS will ensure security using Amazon's AES-256 encryption method and AWS KMS (Key Management System). Any snapshot taken from a encrypted volume would also be encrypted. But it is to be noted that this encryption is only available on selected instance types.</p>
+<h4 id="ways-to-create-ebs-volumes">Ways to Create EBS Volumes:</h4>
+<ul>
+<li>During the creation of a new instance. You can attach it at the time of launch.</li>
+<li>From within the EC2 dashboard of the AWS management console. Create it as a standalone volume, ready to be attached to an instance when required.</li>
+</ul>
+<h2 id="ebs-multi-attach">EBS Multi-Attach</h2>
+<p>Normally one EBS can only be attached to only one EC2. But with Multi-Attach one EBS can be attached with multiple EC2. But this is heavily dependent on the type of volume and the type of instance. For the time being Multi-Attach is only available in - </p>
+<ul>
+<li>Provisioned IOPS SSD (io1)</li>
+<li>Provisioned IOPS SSD (i02)</li>
+</ul>
+<h4 id="file-systems">File Systems</h4>
+<p>It is recommended to use a <strong>Clustered File System</strong> such as GFS2. This will safely manag multi-instance access to the shared volume.</p>
+<h4 id="nitro-systems">Nitro Systems</h4>
+<p>EC2 instances based on the <strong>Nitro Systems</strong> can run EC2 on maximum performance. Nitro instances is a requirement for using Multi-Attach. </p>
+<p><strong>Nitro:</strong> The underlying virtualization platform of the EC2 instance. </p>
+<p><strong>Bare Metal Insances:</strong> The nitro also introduces the concept of Bare Metal Instances. That means you can run EC2 instances without any hypervisor or the customer can use their own hypervisor.</p>
+<h2 id="amazon-elastic-file-system-efs">Amazon Elastic File System (EFS)</h2>
+<p>It is like your typical directory based file system. This also supports low latency file storage. But unlike EBS, it can provide support to multiple file systems. It also has features of traditional file systems such as - locking files, updating files and renaming files. It also has a hierarchial file structure. This type of storage allows you to store files that are accessible to network resources.</p>
+<h2 id="hybrid-storage-solution-using-aws-storage-gateway">Hybrid Storage Solution using AWS Storage Gateway</h2>
+<p>AWS Storage Gateway for hybrid storage between on-premises and cloud infrastructure. </p>
+<h4 id="deployment-options">Deployment Options</h4>
+<ul>
+<li>On-Premises on a Virtual Machine or AWS Storage Gateway Hardware Appliance</li>
+<li>Deploy it on a AWS EC2 instance using AWS Storage Gateway Management Service</li>
+</ul>
+<p>When deploying the gateway, it will ask for at least 150MB which will work as the local cache. This will act as - </p>
+<ul>
+<li>A staging area for data thatthe gateway will upload to AWS</li>
+<li>A true cache to save data for low-latency access</li>
+</ul>
+<p>There are four types of storage gateway - </p>
+<ul>
+<li>S3 File Gateway</li>
+<li>FSx File Gateway</li>
+<li>Tape Gateway</li>
+<li>Volume Gateway</li>
+</ul>
+<h2 id="aws-elastic-disaster-recovery-system-drs">AWS Elastic Disaster Recovery System (DRS)</h2>
+<p>AWS Elastic DRS is AWS' service for recovering failed applications. It is more efficient and cost-effective than on premises data recovery systems. AWS DRS supports <strong>Recovery Point Objectives (RPOs)</strong> of seconds and <strong>Recovery Time Objectives (RTOs)</strong> of minutes by performing ongoing replication of your source servers' disks to EBS volumes in the AWS cloud.</p>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    <script id="__config" type="application/json">{"base": "..", "features": [], "search": "../assets/javascripts/workers/search.a264c092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.4e0fa4ba.min.js"></script>
+      
+    
+  </body>
+</html>

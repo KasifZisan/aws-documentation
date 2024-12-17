@@ -4,5 +4,11 @@ nav:
   - AWS Compute: ec2.md
   - AWS Load Balancers: elb.md
   - AWS Storage: storage.md
+  - AWS EKS: eks.md
 theme:
-  name: readthedocs
+  name: material
+  nav_style: dark
+  palette:
+    scheme: default
+    primary: indigo
+    accent: light blue
