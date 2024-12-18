@@ -278,8 +278,6 @@
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
-        
-      
       
         <label class="md-nav__link md-nav__link--active" for="__toc">
           
@@ -308,14 +306,19 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-elastic-kubernetes-service-eks" class="md-nav__link">
+    Amazon Elastic Kubernetes Service (EKS)
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#installation-and-setup-steps" class="md-nav__link">
@@ -356,6 +359,53 @@
           <li class="md-nav__item">
   <a href="#frontend-deployment" class="md-nav__link">
     Frontend Deployment
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#associating-iam-roles-with-kubernetes-service-accounts-in-amazon-eks" class="md-nav__link">
+    Associating IAM Roles with Kubernetes Service Accounts in Amazon EKS
+  </a>
+  
+    <nav class="md-nav" aria-label="Associating IAM Roles with Kubernetes Service Accounts in Amazon EKS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-iam-roles" class="md-nav__link">
+    Setting up IAM Roles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aws-load-balancer-controller-and-ingress-resource" class="md-nav__link">
+    AWS Load Balancer Controller and Ingress Resource
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS Load Balancer Controller and Ingress Resource">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploy-aws-load-balancer-controller" class="md-nav__link">
+    Deploy AWS Load Balancer Controller
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-and-expose-the-web-app" class="md-nav__link">
+    Deploy and Expose the Web App
   </a>
   
 </li>
@@ -390,14 +440,19 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#amazon-elastic-kubernetes-service-eks" class="md-nav__link">
+    Amazon Elastic Kubernetes Service (EKS)
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#installation-and-setup-steps" class="md-nav__link">
@@ -447,6 +502,53 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#associating-iam-roles-with-kubernetes-service-accounts-in-amazon-eks" class="md-nav__link">
+    Associating IAM Roles with Kubernetes Service Accounts in Amazon EKS
+  </a>
+  
+    <nav class="md-nav" aria-label="Associating IAM Roles with Kubernetes Service Accounts in Amazon EKS">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#setting-up-iam-roles" class="md-nav__link">
+    Setting up IAM Roles
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#aws-load-balancer-controller-and-ingress-resource" class="md-nav__link">
+    AWS Load Balancer Controller and Ingress Resource
+  </a>
+  
+    <nav class="md-nav" aria-label="AWS Load Balancer Controller and Ingress Resource">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#deploy-aws-load-balancer-controller" class="md-nav__link">
+    Deploy AWS Load Balancer Controller
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#deploy-and-expose-the-web-app" class="md-nav__link">
+    Deploy and Expose the Web App
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -462,7 +564,9 @@
                   
 
 
-<h1 id="amazon-elastic-kubernetes-service-eks">Amazon Elastic Kubernetes Service (EKS)</h1>
+  <h1>AWS EKS</h1>
+
+<h2 id="amazon-elastic-kubernetes-service-eks">Amazon Elastic Kubernetes Service (EKS)</h2>
 <p>Amazon Elastic Kubernetes Service (Amazon EKS) is a fully managed Kubernetes service that enables you to run Kubernetes seamlessly in both AWS Cloud and on-premises data centers.</p>
 <p>First you need to get into the AWS platform and then search EC2 and create a Cluster and Node Group. You can then interact with your EKS cluster by SSH-ing into your EKS cluster. Alternatively, you can also set up an EC2 instance to interact with your EKS cluster.</p>
 <p>In preparation to manage your EKS Kubernetes cluster, you will need to install several Kubernetes management-related tools and utilities. In this lab step, you will install:</p>
@@ -698,6 +802,409 @@ curl -I $FRONTEND_ELB_PUBLIC_FQDN
 </ul>
 <pre><code class="language-bash">kubectl exec -it mongo-0 -- mongo langdb --eval &quot;db.languages.find().pretty()&quot;
 </code></pre>
+<h2 id="associating-iam-roles-with-kubernetes-service-accounts-in-amazon-eks">Associating IAM Roles with Kubernetes Service Accounts in Amazon EKS</h2>
+<p>In Kubernetes, a Service Account resource provides an identity for processes that run in a Pod. </p>
+<p>In Amazon Web Services, an Identity and Access Management (IAM) role performs a similar function. IAM roles provide an identity that permissions can be attached to.</p>
+<p>Amazon Elastic Kubernetes Service (EKS) allows you to associate a Kubernetes Service Account with an AWS IAM role. Doing this has the following best-practice security benefits:</p>
+<ul>
+<li>You can ensure that a Pod only has access to the AWS resources that it requires, adhering to the Principle of Least Privilege</li>
+<li>Ensuring that a Pod's AWS IAM credentials are separate from other AWS IAM roles, achieving isolation of credentials</li>
+<li>When using IAM and Service Accounts together, you can use <strong>Amazon CloudTrail</strong> to audit credential access</li>
+</ul>
+<p>Using IAM roles with Kubernetes Service Accounts requires an Open ID Connect (OIDC). EKS can be configured to have a public OIDC discovery endpoint hosted by Amazon for a specific EKS cluster. Using this EKS cluster-specific OIDC provider enables external systems, such as AWS IAM, to accept and verify Kubernetes Service Account tokens. Once an EKS cluster has OIDC configured, it can make use of any of the features of AWS IAM.</p>
+<p>Now we want to show a demonstration, where you will deploy an application that accesses Amazon S3, you will create a new Service Account and associate it with an existing IAM role, and you will verify that the application can access Amazon S3.</p>
+<h4 id="setting-up-iam-roles">Setting up IAM Roles</h4>
+<ul>
+<li>Ensure that you have an up to date <code>kubeconfig</code> file</li>
+</ul>
+<pre><code class="language-bash">cd ~
+aws eks --region us-west-2 update-kubeconfig --name Cluster-1
+</code></pre>
+<ul>
+<li>You can create a seperate namespace and set context for that namespace.</li>
+</ul>
+<pre><code class="language-bash">kubectl create namespace iam-oidc
+kubectl config set-context $(kubectl config current-context) --namespace=iam-oidc
+</code></pre>
+<ul>
+<li>To view an IAM role that has Amazon S3 access, enter the following:</li>
+</ul>
+<pre><code class="language-bash">aws iam get-role --role-name s3-poller-role
+</code></pre>
+<p>In this case, we will have JSON response showing the <code>AssumeRolePolicyDocument</code>. This allows use of the <code>sts:AssumeRoleWithWebIdentity</code> action by default. The <code>principal</code> for this statement is <code>Federated</code> which allows the use of AWS OIDC Provider as an Amazon Resource Name (ARN). The value of the <code>StringEquals</code> key has a value containing a subset of the <code>Principal</code>'s ARN. This is the identifier for the cluster's OIDC endpoint.</p>
+<ul>
+<li>To see the policy attached to the <code>s3-poller-role</code>, enter the following:</li>
+</ul>
+<pre><code class="language-bash">aws iam get-role-policy --role-name s3-poller-role --policy-name s3-poller-policy
+</code></pre>
+<p>This policy allows the <code>s3:List*</code> and <code>s3:PutObject</code> IAM actions. You will associate this pre-created S3 role with a Kubernetes Service Account.</p>
+<ul>
+<li>To see this EKS cluster's OIDC endpoint, issue the following in the terminal:</li>
+</ul>
+<pre><code class="language-bash">aws eks describe-cluster --name Cluster-1 --region us-west-2 --query cluster.identity
+</code></pre>
+<p>In our case, OIDC is already configured. To turn it on for an EKS cluster that doesn't have you can use the eksctl tool in the following way:</p>
+<pre><code class="language-bash">eksctl utils associate-iam-oidc-provider --cluster=&lt;clusterName&gt;
+</code></pre>
+<ul>
+<li>To store the bucket in Amazon S3 in a shell variable, issue the following:</li>
+</ul>
+<pre><code class="language-bash">BUCKET_NAME=$(aws s3api list-buckets --query &quot;Buckets[0].Name&quot; --output text)
+</code></pre>
+<ul>
+<li>Create a new deployment manifest and apply it.</li>
+<li>To update the bucket name in the manifest, use the <code>sed</code> command.</li>
+<li>To check that a Pod has been created by the Deployment, enter: <code>kubectl get pod</code> or you can watch it using <code>kubectl get pod -w</code></li>
+<li>To view Pod's logs - </li>
+</ul>
+<pre><code class="language-bash">kubectl logs -l app=s3-poller -f
+</code></pre>
+<p>The logs of all Pods that have an app label with a value of s3-poller will be displayed. The -f flag is short for follow and it means that kubectl will wait for new log entries and print them as they happen.</p>
+<p>The logs of all Pods that have an app label with a value of s3-poller will be displayed. The container running inside the Pod does not have credentials to access AWS resources. You will configure a Service Account for the Pod that is linked to an IAM role so that the container can access Amazon S3.</p>
+<ul>
+<li>To stop following the logs, press Ctrl-C.</li>
+<li>To list currently existing Service Accounts, issue the following:</li>
+</ul>
+<pre><code class="language-bash">kubectl get serviceaccount
+</code></pre>
+<p>You will see one Service Account named <code>default</code> listed. A default Service Account is automatically created when a new namespace is created. If no Service Account is specified for a Pod, it will use the namespace's default Service Account.</p>
+<p>Service Accounts have tokens. These are stored in Kubernetes Secret resources. Feel free to issue <code>kubectl get secret</code> to see it listed. Also, feel free to add <code>-o yaml</code> to this command and the instruction's command to see the YAML manifest for these resources.</p>
+<ul>
+<li>To create a new Service Account, enter the following: </li>
+</ul>
+<pre><code class="language-bash">kubectl create serviceaccount s3-poller
+</code></pre>
+<ul>
+<li>To associate the newly created Service Account with an IAM role, enter the following:</li>
+</ul>
+<pre><code class="language-bash">kubectl annotate serviceaccount s3-poller \
+    'eks.amazonaws.com/role-arn'='arn:aws:iam::708048379844:role/s3-poller-role'
+</code></pre>
+<ul>
+<li>You can verify the Service Account's configuration by issuing:</li>
+</ul>
+<pre><code class="language-bash">kubectl describe serviceaccount s3-poller
+</code></pre>
+<ul>
+<li>To modify the Deployment to use your new Service Account, issue the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl patch deployment s3-poller \
+  -p '{&quot;spec&quot;:{&quot;template&quot;:{&quot;spec&quot;:{&quot;serviceAccountName&quot;:&quot;s3-poller&quot;}}}}'
+</code></pre>
+<ul>
+<li>To verify that <code>s3-poller</code> Pod can now access Amazon S3, re-issue the logs command from earlier:</li>
+</ul>
+<pre><code class="language-bash">kubectl logs -l app=s3-poller
+</code></pre>
+<h2 id="aws-load-balancer-controller-and-ingress-resource">AWS Load Balancer Controller and Ingress Resource</h2>
+<ul>
+<li>Before creating the Load Balancer Controller, you need to perform some EKS cluster configuration. The EKS cluster can either be created using GUI or in this case, we will be using <code>eksctl</code> utility. It can be created with the following setting:</li>
+</ul>
+<pre><code class="language-bash">eksctl create cluster \
+--version=1.31 \
+--name=Cluster-1 \
+--nodes=1 \
+--node-type=t2.medium \
+--ssh-public-key=&quot;cloudacademylab&quot; \
+--region=us-west-2 \
+--zones=us-west-2a,us-west-2b,us-west-2c \
+--node-volume-type=gp2 \
+--node-volume-size=20
+</code></pre>
+<ul>
+<li>An OpenID Connect provider needs to be established. This was performed using the following command:</li>
+</ul>
+<pre><code class="language-bash">eksctl utils associate-iam-oidc-provider \
+--region us-west-2 \
+--cluster Cluster-1 \
+--approve
+</code></pre>
+<ul>
+<li>A new IAM Policy was created, providing various permissions required to provision the underlying infrastructure items (ALBs and/or NLBs) created when Ingress and Service cluster resources are created.</li>
+</ul>
+<pre><code class="language-bash">curl -o /tmp/iam_policy.json https://raw.githubusercontent.com/kubernetes-sigs/aws-load-balancer-controller/main/docs/install/iam_policy.json
+aws iam create-policy \
+--policy-name AWSLoadBalancerControllerIAMPolicy \
+--policy-document file:///tmp/iam_policy.json
+</code></pre>
+<ul>
+<li>A new cluster service account bound to the IAM policy has been created. When the AWS Load Balancer controller is later deployed by you, it will be configured to operate with this service account:</li>
+</ul>
+<pre><code class="language-bash">eksctl create iamserviceaccount \
+--cluster Cluster-1 \
+--namespace kube-system \
+--name aws-load-balancer-controller \
+--attach-policy-arn arn:aws:iam::${AWS::AccountId}:policy/AWSLoadBalancerControllerIAMPolicy \
+--override-existing-serviceaccounts \
+--approve
+</code></pre>
+<h4 id="deploy-aws-load-balancer-controller">Deploy AWS Load Balancer Controller</h4>
+<ul>
+<li>Install the <strong>helm</strong> utility. Helm will be used to install the AWS Load Balancer Controller chart. In the terminal run the following commands:</li>
+</ul>
+<pre><code class="language-bash">{
+pushd /tmp
+curl -o helm-v3.12.1-linux-amd64.tar.gz https://get.helm.sh/helm-v3.9.2-linux-amd64.tar.gz
+tar -xvf helm-v3.12.1-linux-amd64.tar.gz
+sudo mv linux-amd64/helm /usr/local/bin/helm
+popd
+which helm
+}
+</code></pre>
+<ul>
+<li>Update the local Helm repo</li>
+</ul>
+<pre><code class="language-bash">{
+helm repo add eks https://aws.github.io/eks-charts
+helm repo update
+}
+</code></pre>
+<ul>
+<li>Confirm that a cluster service account exists for the AWS Load Balancer Controller. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl get sa aws-load-balancer-controller -n kube-system -o yaml
+</code></pre>
+<ul>
+<li>Retrieve the VPC ID for the VPC that the EKS cluster worker node is deployed within</li>
+</ul>
+<pre><code class="language-bash">{
+VPC_ID=$(aws eks describe-cluster \
+--name Cluster-1 \
+--query &quot;cluster.resourcesVpcConfig.vpcId&quot; \
+--output text)
+echo $VPC_ID
+}
+</code></pre>
+<ul>
+<li>Deploy the Custom Resource Definition (CRD) resources required by the AWS Load Balancer Controller. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl apply -k &quot;github.com/aws/eks-charts/stable/aws-load-balancer-controller/crds?ref=master&quot;
+</code></pre>
+<ul>
+<li>Using the helm command, deploy the AWS Load Balancer Controller chart. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">helm install \
+aws-load-balancer-controller \
+eks/aws-load-balancer-controller \
+-n kube-system \
+--set clusterName=Cluster-1 \
+--set serviceAccount.create=false \
+--set serviceAccount.name=aws-load-balancer-controller \
+--set image.tag=v2.5.2 \
+--set region=us-west-2 \
+--set vpcId=${VPC_ID} \
+--version=1.5.3
+</code></pre>
+<ul>
+<li>Confirm that the AWS Load Balancer Controller has been successfully deployed into the cluster. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl -n kube-system rollout status deployment aws-load-balancer-controller
+</code></pre>
+<ul>
+<li>Examine details of the deployed AWS Load Balancer Controller. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl describe deployment -n kube-system aws-load-balancer-controller
+</code></pre>
+<h4 id="deploy-and-expose-the-web-app">Deploy and Expose the Web App</h4>
+<p>In this lab step, you will deploy and set up a sample web app that when requested simply returns a static message on a coloured background. Both the message and the background colour are parameterized, with their configurations specified using ConfigMap resources, mounted to within the pod at launch time. You will launch 2 versions of the same web app, considered V1 (yellow) and V2 (cyan), each with it's own unique message and background colour. Finally, both versions of the web app will be exposed publicly using an Ingress resource - resulting in an ALB being launched behind the scenes. HTTP path based routing will be accomplished by leveraging Annotations specified within the Ingress manifest. As a bonus you will also configure an addtional path route (white) which responds with a static message specified directly within the annotation itself.</p>
+<p>Choosing an Ingress resource to expose your cluster hosted application to the Internet, will result in the ALBC provisioning an ALB.</p>
+<ul>
+<li>Create a dedicated namespace to host both versions of the sample web app</li>
+</ul>
+<pre><code class="language-bash">{
+kubectl create ns webapp
+kubectl config set-context $(kubectl config current-context) --namespace=webapp
+}
+</code></pre>
+<ul>
+<li>Create a ConfigMap for each version of the sample web app. Each ConfigMap will contain a unique message and background colour. Confirm both ConfigMaps were created successfully. In the terminal run the following command: <code>kubectl get cm webapp-cfg-v1 webapp-cfg-v2</code></li>
+<li>Create a Deployment for each version of the sample web app. Create both the v1 and v2 deployment resource. </li>
+</ul>
+<pre><code class="language-yaml">cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontend-v1
+  namespace: webapp
+  labels:
+    role: frontend
+    version: v1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      role: frontend
+      version: v1
+  template:
+    metadata:
+      labels:
+        role: frontend
+        version: v1
+    spec:
+      containers:
+      - name: webapp
+        image: cloudacademydevops/webappecho:v3
+        imagePullPolicy: IfNotPresent
+        command: [&quot;/go/bin/webapp&quot;]
+        ports:
+        - containerPort: 8080
+        env:
+        - name: MESSAGE
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-cfg-v1
+              key: message
+        - name: BACKGROUND_COLOR
+          valueFrom:
+            configMapKeyRef:
+              name: webapp-cfg-v1
+              key: bgcolor
+EOF
+</code></pre>
+<ul>
+<li>Confirm both Deployments were rolled out successfully. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">{
+kubectl rollout status deployment frontend-v1
+kubectl rollout status deployment frontend-v2
+}
+</code></pre>
+<ul>
+<li>Create a Service for each version of the sample web app</li>
+</ul>
+<pre><code class="language-yaml">apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-v1
+  namespace: webapp
+  labels:
+    role: frontend
+    version: v1
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    role: frontend
+    version: v1
+  type: NodePort
+EOF
+</code></pre>
+<ul>
+<li>Confirm both Services have been created and respective Pod endpoints (IPs) have been registered successfully. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl get svc,ep
+</code></pre>
+<ul>
+<li>Initially expose just the V1 Service to the Internet. Create an Ingress resource for the V1 sample web app. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-yaml">cat &lt;&lt; EOF | kubectl apply -f -
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  namespace: webapp
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /
+            backend:
+              service:
+                name: frontend-v1
+                port:
+                  number: 80
+EOF
+</code></pre>
+<ul>
+<li>Confirm that the Ingress resource was created successfully. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">kubectl get ingress frontend
+</code></pre>
+<ul>
+<li>Confirm that the ALB and associated DNS records are created for the Ingress resource. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">{
+ALB_FQDN=$(kubectl -n webapp get ingress frontend -o jsonpath='{.status.loadBalancer.ingress[0].hostname}')
+echo ALB_FQDN=$ALB_FQDN
+until nslookup $ALB_FQDN &gt;/dev/null 2&gt;&amp;1; do sleep 2 &amp;&amp; echo waiting for DNS to propagate...; done
+until curl --silent $ALB_FQDN | grep CloudAcademy &gt;/dev/null 2&gt;&amp;1; do sleep 2 &amp;&amp; echo waiting for ALB to register targets...; done
+curl -I $ALB_FQDN
+echo
+echo READY...
+echo browse to:
+echo &quot; http://$ALB_FQDN&quot;
+}
+</code></pre>
+<ul>
+<li>Update the Ingress resource to include annotations for routing HTTP traffic. Create a new file named <strong>annotations.config</strong> and populate it with <strong>path routing</strong> configuration. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">kubernetes.io/ingress.class: alb
+alb.ingress.kubernetes.io/scheme: internet-facing
+alb.ingress.kubernetes.io/target-type: ip
+alb.ingress.kubernetes.io/actions.forward-tg-svc1: &gt;
+  {&quot;type&quot;:&quot;forward&quot;,&quot;forwardConfig&quot;:{&quot;targetGroups&quot;:[{&quot;serviceName&quot;:&quot;frontend-v1&quot;,&quot;servicePort&quot;:&quot;80&quot;}]}}
+alb.ingress.kubernetes.io/actions.forward-tg-svc2: &gt;
+  {&quot;type&quot;:&quot;forward&quot;,&quot;forwardConfig&quot;:{&quot;targetGroups&quot;:[{&quot;serviceName&quot;:&quot;frontend-v2&quot;,&quot;servicePort&quot;:&quot;80&quot;}]}}
+alb.ingress.kubernetes.io/actions.custom-path1: &gt;
+  {&quot;type&quot;:&quot;fixed-response&quot;,&quot;fixedResponseConfig&quot;:{&quot;contentType&quot;:&quot;text/plain&quot;,&quot;statusCode&quot;:&quot;200&quot;,&quot;messageBody&quot;:&quot;follow the white rabbit...&quot;}}
+EOF
+</code></pre>
+<ul>
+<li>Capture the contents of the <code>annotations.config</code> file in a variable named <code>ANNOTATIONS</code>. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-bash">{
+ANNOTATIONS=&quot;$(cat annotations.config)&quot;
+echo &quot;$ANNOTATIONS&quot;
+}
+</code></pre>
+<ul>
+<li>Create a new file named ingress.annotations.yaml and populate it with the Ingress manifest configuration, injecting the updated set of path routing annotations. In the terminal run the following command:</li>
+</ul>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: frontend
+  namespace: webapp
+  annotations:
+$ANNOTATIONS
+spec:
+  rules:
+    - http:
+        paths:
+          - path: /yellow
+            pathType: Exact
+            backend:
+              service:
+                name: forward-tg-svc1
+                port:
+                  name: use-annotation
+          - path: /cyan
+            pathType: Exact
+            backend:
+              service:
+                name: forward-tg-svc2
+                port:
+                  name: use-annotation
+          - path: /white
+            pathType: Exact
+            backend:
+              service:
+                name: custom-path1
+                port:
+                  name: use-annotation
+EOF
+</code></pre>
+<ul>
+<li>Apply the updated Ingress into the cluster - <code>kubectl apply -f ingress.annotations.yaml</code></li>
+</ul>
 
 
 
